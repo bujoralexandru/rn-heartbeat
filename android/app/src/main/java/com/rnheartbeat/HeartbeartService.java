@@ -27,7 +27,7 @@ public class HeartbeartService extends Service {
             Intent myIntent = new Intent(context, HeartbeatEventService.class);
             context.startService(myIntent);
             HeadlessJsTaskService.acquireWakeLockNow(context);
-            handler.postDelayed(this, 2000);
+            handler.postDelayed(this, 10000);
         }
     };
     private void createNotificationChannel() {
