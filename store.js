@@ -1,25 +1,32 @@
-import { createStore, combineReducers } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 
 const appInitialState = {
-  heartBeat: false,
+  isServiceRunning: false
 };
 
-const SET_HEART_BEAT = 'SET_HEART_BEAT';
-export const setHeartBeat = createAction(SET_HEART_BEAT);
+const START_SERVICE = 'START_SERVICE';
+const STOP_SERVICE = 'STOP_SERVICE';
+
+export const startService = createAction(START_SERVICE);
+export const stopService = createAction(STOP_SERVICE);
 
 const App = handleActions(
   {
-    [SET_HEART_BEAT]: (state, { payload }) => ({
+    [START_SERVICE]: (state) => ({
       ...state,
-      heartBeat: payload,
+      isServiceRunning: true
     }),
+    [STOP_SERVICE]: (state) => ({
+      ...state,
+      isServiceRunning: false
+    })
   },
-  appInitialState,
+  appInitialState
 );
 
 const rootReducer = combineReducers({
-  App,
+  App
 });
 
 const configureStore = () => createStore(rootReducer);

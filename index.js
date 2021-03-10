@@ -6,7 +6,7 @@ import SendSMS from 'react-native-sms-x';
 import { Provider } from 'react-redux';
 import App from './App';
 import { name as appName } from './app.json';
-import { setHeartBeat, store } from './store';
+import { store } from './store';
 
 const MyHeadlessTask = async () => {
   axios
@@ -20,7 +20,7 @@ const MyHeadlessTask = async () => {
             SendSMS.send(
               123,
               '+40742644552',
-              `${res.data.stats}: ${res.data.data.length}`,
+              `${res.data.status}: ${res.data.data.length}`,
               (msg) => console.log(msg)
             );
           switch (result) {
@@ -50,14 +50,6 @@ const MyHeadlessTask = async () => {
         .catch((err) => console.error(err));
     })
     .catch((err) => console.error(err));
-
-  console.log(`Receiving HeartBeat! ${new Date().getSeconds()}`);
-
-  // send sms to +40742644552
-  store.dispatch(setHeartBeat(true));
-  setTimeout(() => {
-    store.dispatch(setHeartBeat(false));
-  }, 1000);
 };
 
 const RNRedux = () => (

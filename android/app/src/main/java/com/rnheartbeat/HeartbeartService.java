@@ -1,16 +1,17 @@
 package com.rnheartbeat;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+
 import androidx.core.app.NotificationCompat;
-import android.app.NotificationManager;
-import android.app.NotificationChannel;
-import android.os.Build;
 
 import com.facebook.react.HeadlessJsTaskService;
 
@@ -27,9 +28,10 @@ public class HeartbeartService extends Service {
             Intent myIntent = new Intent(context, HeartbeatEventService.class);
             context.startService(myIntent);
             HeadlessJsTaskService.acquireWakeLockNow(context);
-            handler.postDelayed(this, 10000);
+            handler.postDelayed(this, 30000);
         }
     };
+
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library

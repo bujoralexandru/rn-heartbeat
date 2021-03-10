@@ -1,1 +1,1 @@
-# rn-heartbeat
+# Beauty SMS PoC
