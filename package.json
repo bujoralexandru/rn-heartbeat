@@ -14,10 +14,12 @@
     "react": "16.9.0",
     "react-native": "0.61.0",
     "react-native-permissions": "^3.0.1",
+    "react-native-phone-number-input": "^2.0.0",
     "react-native-sms-x": "^1.0.7",
     "react-redux": "^7.0.3",
     "redux": "^4.0.1",
-    "redux-actions": "^2.6.5"
+    "redux-actions": "^2.6.5",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

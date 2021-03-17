@@ -26,3 +26,4 @@ android/app/.settings/
 # Ignore gradle files
 .gradle/
 build/
+.DS_Store

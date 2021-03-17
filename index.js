@@ -8,7 +8,14 @@ import App from './App';
 import { name as appName } from './app.json';
 import { store } from './store';
 
-const MyHeadlessTask = async () => {
+const MyHeadlessTask = async (store) => {
+  console.log('State: ', store.getState());
+
+  const { App } = store.getState();
+  const { phoneNumber } = App;
+
+  console.log('Sending SMS to: ' + phoneNumber);
+
   axios
     .get('http://dummy.restapiexample.com/api/v1/employees')
     .then((res) => {
@@ -19,7 +26,7 @@ const MyHeadlessTask = async () => {
           const sensSMS = () =>
             SendSMS.send(
               123,
-              '+40742644552',
+              phoneNumber,
               `${res.data.status}: ${res.data.data.length}`,
               (msg) => console.log(msg)
             );
@@ -58,5 +65,7 @@ const RNRedux = () => (
   </Provider>
 );
 
-AppRegistry.registerHeadlessTask('Heartbeat', () => MyHeadlessTask);
+AppRegistry.registerHeadlessTask('Heartbeat', () =>
+  MyHeadlessTask.bind(null, store)
+);
 AppRegistry.registerComponent(appName, () => RNRedux);

@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import PhoneInput from 'react-native-phone-number-input';
 import { connect } from 'react-redux';
 import Heartbeat from './Heartbeat';
-import { store, startService, stopService } from './store';
+import { setPhoneNumber, startService, stopService, store } from './store';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const App = ({ isServiceRunning }) => {
+const App = ({ isServiceRunning, phoneNumber }) => {
   const buttonText = isServiceRunning ? 'Stop' : 'Start';
   const toggleService = () => {
     switch (isServiceRunning) {
@@ -36,6 +37,10 @@ const App = ({ isServiceRunning }) => {
         store.dispatch(stopService());
         break;
       case false:
+        if (!phoneNumber) {
+          return;
+        }
+
         Heartbeat.startService();
         store.dispatch(startService());
         break;
@@ -45,6 +50,16 @@ const App = ({ isServiceRunning }) => {
   return (
     <View style={styles.container}>
       <View style={styles.view}>
+        <PhoneInput
+          defaultCode='RO'
+          layout='first'
+          onChangeFormattedText={(text) => {
+            store.dispatch(setPhoneNumber(text));
+          }}
+          withDarkTheme
+          withShadow
+          autoFocus
+        />
         <TouchableOpacity style={styles.button} onPress={toggleService}>
           <Text style={styles.instructions}>{buttonText}</Text>
         </TouchableOpacity>
@@ -54,7 +69,8 @@ const App = ({ isServiceRunning }) => {
 };
 
 const mapStateToProps = (store) => ({
-  isServiceRunning: store.App.isServiceRunning
+  isServiceRunning: store.App.isServiceRunning,
+  phoneNumber: store.App.phoneNumber
 });
 
 export default connect(mapStateToProps)(App);
